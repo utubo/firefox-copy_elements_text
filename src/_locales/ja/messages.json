@@ -1,0 +1,11 @@
+{
+	"extensionName": {
+		"message": "要素のテキストをコピー"
+	},
+	"extensionDescription": {
+		"message": "コンテキストメニューに「要素のテキストをコピー」を追加します"
+	},
+	"Copy Element's text": {
+		"message": "要素のテキストをコピー"
+	}
+}
