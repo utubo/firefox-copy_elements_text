@@ -7,6 +7,12 @@
 	},
 	"Copy Element's text": {
 		"message": "Copy Element's text"
+	},
+	"Notify": {
+		"message": "Notify"
+	},
+	"Copied": {
+		"message": "Copied"
 	}
 }
 
