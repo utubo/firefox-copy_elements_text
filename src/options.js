@@ -19,7 +19,7 @@ restoreOptions = async () => {
 
 document.addEventListener('DOMContentLoaded', restoreOptions);
 
-for (const ipt of document.getElementsByTagName('INPUT') {
+for (const ipt of document.getElementsByTagName('INPUT')) {
   ipt.addEventListener('input', saveOptions);
 }
 

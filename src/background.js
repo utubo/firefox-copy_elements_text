@@ -8,27 +8,25 @@ browser.menus.create({
 browser.menus.onClicked.addListener(async (info, tab) => {
   if (info.menuItemId !== 'copy_elements_text') return;
 
-  const trim = await browser.storage.local.get('trim')).trim;
-  let trimFunc = ''
-  if (trim === 'keep_indent') {
+  const res = await browser.storage.local.get();
+  let trimFunc = '';
+  if (res.trim === 'keep_indent') {
     trimFunc = `
-      if (trim) {
-        const lines = text.replace(/^\s+|\s+$/g, '').split('\n');
-        const indent = RegExp('^' + lines[0].replace(/\S.*/, ''));
-        const newLines = [];
-        for (const line of lines) {
-          newLines.push(line.replace(indent, '').replace('/\s+$/', ''))
-        }
-        text = newLines.join('\n');
+      const lines = text.replace(/^\\s+|\\s+$/g, '').split('\\n');
+      const indent = RegExp('^' + lines[0].replace(/\\S.*/, ''));
+      const newLines = [];
+      for (const line of lines) {
+        newLines.push(line.replace(indent, '').replace('/\\s+$/', ''))
       }
+      text = newLines.join('\\n');
     `;
-  } else if (trim === 'trim_all_lines') {
-    trimFunc = `text = text.replace(/(^|\n)\s+/g, '$1').replace(/\s+($|\n)/g, '$1');`
-  } else if (Trim === 'remove_all_line_breaks') {
-    trimFunc = `text = text.replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');`
+  } else if (res.trim === 'trim_all_lines') {
+    trimFunc = `text = text.replace(/(^|\\n)\\s+/g, '$1').replace(/\\s+($|\\n)/g, '$1');`;
+  } else if (res.trim === 'remove_all_line_breaks') {
+    trimFunc = `text = text.replace(/^\\s+|\\s+$/g, '').replace(/\\s+/g, ' ');`;
   }
 
-  const text = await browser.tabs.executeScript(tab.id, {
+  const result = await browser.tabs.executeScript(tab.id, {
     code: `
       (() => {
         const e = browser.menus.getTargetElement(${info.targetElementId});
@@ -62,11 +60,12 @@ browser.menus.onClicked.addListener(async (info, tab) => {
       })();
     `
   });
-  if (text[0] && (await browser.storage.local.get('notify')).notify) {
+  const text = result[0];
+  if (text && res.notify) {
     browser.notifications.create({
       type: 'basic',
       title: browser.i18n.getMessage('Copied'),
-      message: text[0]
+      message: text
     });
   }
 });
