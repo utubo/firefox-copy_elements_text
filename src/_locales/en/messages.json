@@ -11,8 +11,26 @@
 	"Notify": {
 		"message": "Notify"
 	},
+	"Notify copied text": {
+		"message": "Notify copied text"
+	},
 	"Copied": {
 		"message": "Copied"
+	},
+	"Trim spaces": {
+		"message": "Trim spaces"
+	},
+	"Disable": {
+		"message": "Disable"
+	},
+	"Enable": {
+		"message": "Enable"
+	},
+	"Keep indent": {
+		"message": "Keep indent"
+	},
+	"Remove all line breaks": {
+		"message": "Remove all line breaks"
 	}
 }
 

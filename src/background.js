@@ -7,6 +7,27 @@ browser.menus.create({
 
 browser.menus.onClicked.addListener(async (info, tab) => {
   if (info.menuItemId !== 'copy_elements_text') return;
+
+  const trim = await browser.storage.local.get('trim')).trim;
+  let trimFunc = ''
+  if (trim === 'keep_indent') {
+    trimFunc = `
+      if (trim) {
+        const lines = text.replace(/^\s+|\s+$/g, '').split('\n');
+        const indent = RegExp('^' + lines[0].replace(/\S.*/, ''));
+        const newLines = [];
+        for (const line of lines) {
+          newLines.push(line.replace(indent, '').replace('/\s+$/', ''))
+        }
+        text = newLines.join('\n');
+      }
+    `;
+  } else if (trim === 'trim_all_lines') {
+    trimFunc = `text = text.replace(/(^|\n)\s+/g, '$1').replace(/\s+($|\n)/g, '$1');`
+  } else if (Trim === 'remove_all_line_breaks') {
+    trimFunc = `text = text.replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');`
+  }
+
   const text = await browser.tabs.executeScript(tab.id, {
     code: `
       (() => {
@@ -24,6 +45,9 @@ browser.menus.onClicked.addListener(async (info, tab) => {
           text = e.textContent || e.getAttribute('title') || e.getAttribute('alt');
         }
         text = text || '';
+
+        ${trimFunc}
+
         if (navigator.clipboard) {
           navigator.clipboard.writeText(text);
         } else {

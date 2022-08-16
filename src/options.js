@@ -1,18 +1,25 @@
-const notify = document.getElementById('notify');
-
 for (const e of document.getElementsByClassName('i18n')) {
   e.textContent = browser.i18n.getMessage(e.textContent);
 }
 
+const form = document.forms.config;
+
 saveOptions = () => {
-  browser.storage.local.set({ notify: notify.checked });
+  browser.storage.local.set({
+    notify: form.notify.checked,
+    trim: form.trim.value,
+  });
 };
 
 restoreOptions = async () => {
-  const res = await browser.storage.local.get('notify');
-  notify.checked = !! res.notify;
+  const res = await browser.storage.local.get();
+  form.notify.checked = !! res.notify;
+  form.trim.value = res.trim || 'disable';
 };
 
 document.addEventListener('DOMContentLoaded', restoreOptions);
-notify.addEventListener('input', saveOptions);
+
+for (const ipt of document.getElementsByTagName('INPUT') {
+  ipt.addEventListener('input', saveOptions);
+}
 

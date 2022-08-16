@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
   <head>
     <meta charset="utf-8">
@@ -13,15 +12,38 @@
           color: #fbfbfe;
         }
       }
+      label {
+        display: block;
+      }
     </style>
   </head>
-
 <body>
-  <form>
-      <input id="notify" type="checkbox">
-      <label for="notify" class="i18n">Notify</label>
+  <form name="config">
+    <h2 class="i18n">Notify</h2>
+    <label>
+      <input name="notify" type="checkbox">
+      <span class="i18n">Notify copied text</span>
+    </label>
+
+    <h2 class="i18n">Trim spaces</h2>
+    <label>
+       <input name="trim" type="radio" value="disable">
+       <span class="i18n">Disable</span>
+    </label>
+    <label>
+       <input name="trim" type="radio" value="trim_all_lines">
+       <span class="i18n">Enable</span>
+    </label>
+    <label>
+       <input name="trim" type="radio" value="keep_indent">
+       <span class="i18n">Keep indent</span>
+    </label>
+    <label>
+       <input name="trim" type="radio" value="remove_all_line_breaks">
+       <span class="i18n">Remove all line breaks</span>
+    </label>
   </form>
   <script src="options.js"></script>
 </body>
-
 </html>
+

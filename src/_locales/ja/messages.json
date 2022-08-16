@@ -11,7 +11,26 @@
 	"Notify": {
 		"message": "通知"
 	},
+	"Notify copied text": {
+		"message": "コピーしたテキストを通知で表示する"
+	},
 	"Copied": {
 		"message": "テキストをクリップボードにコピーしました"
+	},
+	"Trim spaces": {
+		"message": "前後の空白を取り除く"
+	},
+	"Disable": {
+		"message": "無効"
+	},
+	"Enable": {
+		"message": "有効"
+	},
+	"Keep indent": {
+		"message": "インデントを保ったまま取り除く"
+	},
+	"Remove all line breaks": {
+		"message": "改行も全て取り除く"
 	}
 }
+
