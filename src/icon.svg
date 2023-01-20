@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 16 16" stroke="context-fill" opacity="context-fill-opacity" fill="none" stroke-width="1.5" stroke-linejoin="round">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 16 16" opacity="context-fill-opacity" fill="none" stroke-width="1.5" stroke-linejoin="round">
+<style>
+path { stroke: #0c0c0d; }
+@media (prefers-color-scheme: dark) { path { stroke: #fbfbfe; } }
+</style>
 <path d="M4.5 6h-2.5v8h8v-2.5"/>
 <path d="M6 2h8v8h-8z"/>
 </svg>
