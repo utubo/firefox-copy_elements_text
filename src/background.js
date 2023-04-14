@@ -40,7 +40,7 @@ browser.menus.onClicked.addListener(async (info, tab) => {
           text = e.options[e.selectedIndex].text;
           break;
         default:
-          text = e.textContent || e.getAttribute('title') || e.getAttribute('alt');
+          text = e.innerText || e.getAttribute('title') || e.getAttribute('alt') || e.textContent;
         }
         text = text || '';
 
