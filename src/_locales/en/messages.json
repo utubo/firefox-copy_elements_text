@@ -1,12 +1,12 @@
 {
 	"extensionName": {
-		"message": "Copy Element's text"
+		"message": "Copy text of element"
 	},
 	"extensionDescription": {
-		"message": "Add 'Copy Element's text' to the context menu."
+		"message": "Add 'Copy text of element' to the context menu."
 	},
 	"Copy Element's text": {
-		"message": "Copy Element's text"
+		"message": "Copy text of element"
 	},
 	"Notify": {
 		"message": "Notify"
