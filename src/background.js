@@ -1,13 +1,55 @@
+const MENU_ID = 'copy_elements_text';
+const TITLE = browser.i18n.getMessage("Copy Element's text");
+const COPY = 'Copy';
+
 browser.menus.create({
-  id: 'copy_elements_text',
-  title: browser.i18n.getMessage("Copy Element's text"),
+  id: MENU_ID,
+  title: TITLE,
   documentUrlPatterns: ['https://*/*', 'http://*/*'],
   contexts: ['all'],
 });
 
+let targetText = null;
+
+browser.menus.onShown.addListener(async (info, tab) => {
+  if (info.targetElementId) {
+    try {
+      targetText = await getText(info, tab);
+    } catch {
+      // nop
+    }
+    if (targetText) {
+      browser.menus.update(MENU_ID, {
+        enabled: true,
+        title: `${COPY}: "${trunc(targetText, 10)}"`,
+      });
+    } else {
+      browser.menus.update(MENU_ID, { enabled: false, title: TITLE });
+    }
+  } else {
+    // only parmitted when click
+    browser.menus.update(MENU_ID, { enabled: true, title: TITLE });
+    targetText = null;
+  }
+  browser.menus.refresh();
+});
+
 browser.menus.onClicked.addListener(async (info, tab) => {
   if (info.menuItemId !== 'copy_elements_text') return;
+  const text = targetText || await getText(info, tab);
+  if (!text) return;
+  navigator.clipboard.writeText(text);
+  const res = await browser.storage.local.get();
+  if (res.notify) {
+    browser.notifications.create({
+      type: 'basic',
+      title: browser.i18n.getMessage('Copied'),
+      message: text
+    });
+  }
+});
 
+const getText = async (info, tab) => {
   const res = await browser.storage.local.get();
   let trimFunc = '';
   if (res.trim === 'keep_indent') {
@@ -46,27 +88,12 @@ browser.menus.onClicked.addListener(async (info, tab) => {
 
         ${trimFunc}
 
-        if (navigator.clipboard) {
-          navigator.clipboard.writeText(text);
-        } else {
-          const work = document.createElement('TEXTAREA');
-          work.value = text;
-          document.body.appendChild(work);
-          work.select();
-          document.execCommand('copy');
-          document.body.removeChild(work);
-        }
         return text;
       })();
     `
   });
-  const text = result[0];
-  if (text && res.notify) {
-    browser.notifications.create({
-      type: 'basic',
-      title: browser.i18n.getMessage('Copied'),
-      message: text
-    });
-  }
-});
+  return result[0];
+};
+
+const trunc = (str, n) => (n < str.length) ? str.slice(0, n - 3) + '...' : str;
 
